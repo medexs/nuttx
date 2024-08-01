@@ -74,6 +74,15 @@ config ARCH_BOARD_AXOLOTI
 		Axoloti synthesizer board based on the STMicro STM32F427IGH6 MCU.
 		See: http://www.axoloti.com/
 
+config ARCH_BOARD_BASYS3
+	bool "DIGILENT Basys 3 board"
+	depends on ARCH_CHIP_IBEX
+	select ARCH_HAVE_LEDS
+	select ARCH_HAVE_BUTTONS
+	---help---
+		This is the board configuration for the port of NuttX to the Digilent Basys 3
+		board. This board features the RISC-V Ibex softcore by lowRISC.
+
 config ARCH_BOARD_BL602EVB
 	bool "BouffaloLab BL602EVB Board"
 	depends on ARCH_CHIP_BL602
@@ -3194,6 +3203,7 @@ config ARCH_BOARD
 	default "avr32dev1"                 if ARCH_BOARD_AVR32DEV1
 	default "axoloti"                   if ARCH_BOARD_AXOLOTI
 	default "bambino-200e"              if ARCH_BOARD_BAMBINO_200E
+	default "basys3"                    if ARCH_BOARD_BASYS3
 	default "bl602evb"                  if ARCH_BOARD_BL602EVB
 	default "c5471evm"                  if ARCH_BOARD_C5471EVM
 	default "circuit-express"           if ARCH_BOARD_CIRCUIT_EXPRESS
@@ -4335,6 +4345,9 @@ source "boards/risc-v/jh7110/star64/Kconfig"
 endif
 if ARCH_BOARD_K230_CANMV
 source "boards/risc-v/k230/canmv230/Kconfig"
+endif
+if ARCH_BOARD_BASYS3
+source "boards/risc-v/ibex/basys3/Kconfig"
 endif
 if ARCH_BOARD_BL808_OX64
 source "boards/risc-v/bl808/ox64/Kconfig"

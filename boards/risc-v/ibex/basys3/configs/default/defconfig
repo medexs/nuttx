@@ -1,4 +1,4 @@
-# Necessary variables
+# Necessary variables for running tools/configure.sh
 CONFIG_ARCH="risc-v"
 CONFIG_ARCH_BOARD="basys3"
 CONFIG_ARCH_CHIP="ibex"

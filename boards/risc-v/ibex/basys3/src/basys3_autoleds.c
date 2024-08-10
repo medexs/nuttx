@@ -49,43 +49,7 @@ void board_autoled_initialize(void)
 void board_autoled_on(int led)
 {
 	uint32_t curr_val = ibex_gpio_read(GPIO_OUT);
-
-	switch (led)
-	{
-		case LED_STARTED:
-			ibex_gpio_write(GPIO_OUT, curr_val | BOARD_LED_MASK(0));
-		break;
-		
-		case LED_HEAPALLOCATE:
-			ibex_gpio_write(GPIO_OUT, curr_val | BOARD_LED_MASK(1));
-		break;
-
-		case LED_IRQSENABLED:
-			ibex_gpio_write(GPIO_OUT, curr_val | BOARD_LED_MASK(2));
-		break;
-
-		case LED_STACKCREATED:
-			ibex_gpio_write(GPIO_OUT, curr_val | BOARD_LED_MASK(3));
-		break;
-
-		case LED_INIRQ:
-			ibex_gpio_write(GPIO_OUT, curr_val | BOARD_LED_MASK(4));
-		break;
-
-		case LED_SIGNAL:
-			ibex_gpio_write(GPIO_OUT, curr_val | BOARD_LED_MASK(5));
-		break;
-
-		case LED_ASSERTION:
-			ibex_gpio_write(GPIO_OUT, curr_val | BOARD_LED_MASK(6));
-		break;
-
-		case LED_PANIC:
-			ibex_gpio_write(GPIO_OUT, curr_val | BOARD_LED_MASK(7));
-		break;
-
-		default: break;
-	}
+	ibex_gpio_write(GPIO_OUT, curr_val | led);
 }
 
 /****************************************************************************
@@ -94,41 +58,5 @@ void board_autoled_on(int led)
 void board_autoled_off(int led)
 {
 	uint32_t curr_val = ibex_gpio_read(GPIO_OUT);
-
-	switch (led)
-	{
-		case LED_STARTED:
-			ibex_gpio_write(GPIO_OUT, curr_val & ~BOARD_LED_MASK(0));
-		break;
-		
-		case LED_HEAPALLOCATE:
-			ibex_gpio_write(GPIO_OUT, curr_val & ~BOARD_LED_MASK(1));
-		break;
-
-		case LED_IRQSENABLED:
-			ibex_gpio_write(GPIO_OUT, curr_val & ~BOARD_LED_MASK(2));
-		break;
-
-		case LED_STACKCREATED:
-			ibex_gpio_write(GPIO_OUT, curr_val & ~BOARD_LED_MASK(3));
-		break;
-
-		case LED_INIRQ:
-			ibex_gpio_write(GPIO_OUT, curr_val & ~BOARD_LED_MASK(4));
-		break;
-
-		case LED_SIGNAL:
-			ibex_gpio_write(GPIO_OUT, curr_val & ~BOARD_LED_MASK(5));
-		break;
-
-		case LED_ASSERTION:
-			ibex_gpio_write(GPIO_OUT, curr_val & ~BOARD_LED_MASK(6));
-		break;
-
-		case LED_PANIC:
-			ibex_gpio_write(GPIO_OUT, curr_val & ~BOARD_LED_MASK(7));
-		break;
-
-		default: break;
-	}
+	ibex_gpio_write(GPIO_OUT, curr_val & ~led);
 }

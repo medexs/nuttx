@@ -1,5 +1,6 @@
+
 /****************************************************************************
- * boards/risc-v/ibex/basys3/include/board.h
+ * arch/risc-v/src/ibex/ibex_gpio.h
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,26 +19,38 @@
  *
  ****************************************************************************/
 
-#ifndef __BOARDS_RISCV_IBEX_BASYS3_INCLUDE_BOARD_H
-#define __BOARDS_RISCV_IBEX_BASYS3_INCLUDE_BOARD_H
+#ifndef __ARCH_RISCV_SRC_IBEX_IBEX_GPIO_H
+#define __ARCH_RISCV_SRC_IBEX_IBEX_GPIO_H
+
+/****************************************************************************
+ * Included Files
+ ****************************************************************************/
+#include <stdint.h>
 
 /****************************************************************************
  * Pre-processor Definitions
  ****************************************************************************/
 
-// Debug LEDs
-#define LED_STARTED      0
-#define LED_HEAPALLOCATE 1
-#define LED_IRQSENABLED  2
-#define LED_STACKCREATED 3
-#define LED_INIRQ        4
-#define LED_SIGNAL       5
-#define LED_ASSERTION    6
-#define LED_PANIC        7
+/****************************************************************************
+ * Public Function Prototypes
+ ****************************************************************************/
 
-// Basys3 LEDs
-#define BOARD_LED0_MASK   0x1
-#define BOARD_LED_MASK(n) (BOARD_LED0_MASK << n)
+/****************************************************************************
+ * Name: ibex_gpio_write
+ *
+ * Description:
+ *   Write data to GPIO pin at addr
+ *
+ ****************************************************************************/
+void ibex_gpio_write(uint32_t addr, uint32_t data);
 
-#endif /* __BOARDS_RISCV_IBEX_BASYS3_INCLUDE_BOARD_H */
+/****************************************************************************
+ * Name: ibex_gpio_read
+ *
+ * Description:
+ *   Return data from GPIO pin at addr
+ *
+ ****************************************************************************/
+uint32_t ibex_gpio_read(uint32_t addr);
 
+#endif /* __ARCH_RISCV_SRC_IBEX_IBEX_GPIO_H */

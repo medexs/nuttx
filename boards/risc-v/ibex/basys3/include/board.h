@@ -22,22 +22,19 @@
 #define __BOARDS_RISCV_IBEX_BASYS3_INCLUDE_BOARD_H
 
 /****************************************************************************
+ * Included Files
+ ****************************************************************************/
+#include <stdint.h>
+
+/****************************************************************************
  * Pre-processor Definitions
  ****************************************************************************/
 
-// Debug LEDs
-#define LED_STARTED      0
-#define LED_HEAPALLOCATE 1
-#define LED_IRQSENABLED  2
-#define LED_STACKCREATED 3
-#define LED_INIRQ        4
-#define LED_SIGNAL       5
-#define LED_ASSERTION    6
-#define LED_PANIC        7
-
 // Basys3 LEDs
-#define BOARD_LED0_MASK   0x1
-#define BOARD_LED_MASK(n) (BOARD_LED0_MASK << n)
+#define BOARD_LED_CNT       16
+#define BOARD_ALL_LED_MASK  ((BOARD_LED_CNT == 32) ? 0xFFFFFFFF : (((uint32_t)1 << BOARD_LED_CNT) - 1))
+#define BOARD_LED0_MASK     0x1
+#define BOARD_LED_MASK(n)   (BOARD_LED0_MASK << n)
 
 // NuttX Event LEDs
 #define LED_STARTED         BOARD_LED_MASK(0)

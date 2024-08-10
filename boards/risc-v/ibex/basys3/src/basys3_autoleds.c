@@ -40,6 +40,7 @@
 void board_autoled_initialize(void)
 {
 	// Turn all LEDs off
+	// TODO: set only LED pins to 0, but the rest of GPIO_OUT has to be defined
 	ibex_gpio_write(GPIO_OUT, 0);
 }
 

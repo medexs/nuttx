@@ -19,3 +19,9 @@
 #############################################################################
 
 include $(TOPDIR)/Make.defs
+
+ifeq ($(CONFIG_ARCH_LEDS),y)
+  CSRCS += basys3_autoleds.c
+endif
+
+include $(TOPDIR)/boards/Board.mk

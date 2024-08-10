@@ -18,4 +18,6 @@
 #
 ############################################################################
 
-include common/Make.defs
+# include common/Make.defs
+
+CHIP_CSRCS += ibex_gpio.c

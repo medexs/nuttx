@@ -1,5 +1,5 @@
 /****************************************************************************
- * boards/risc-v/ibex/basys3/include/board.h
+ * arch/risc-v/src/ibex/hardware/ibex_gpio.h
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,26 +18,22 @@
  *
  ****************************************************************************/
 
-#ifndef __BOARDS_RISCV_IBEX_BASYS3_INCLUDE_BOARD_H
-#define __BOARDS_RISCV_IBEX_BASYS3_INCLUDE_BOARD_H
+#ifndef __ARCH_RISCV_SRC_IBEX_HARDWARE_IBEX_GPIO_H
+#define __ARCH_RISCV_SRC_IBEX_HARDWARE_IBEX_GPIO_H
 
 /****************************************************************************
- * Pre-processor Definitions
+ * Included Files
  ****************************************************************************/
 
-// Debug LEDs
-#define LED_STARTED      0
-#define LED_HEAPALLOCATE 1
-#define LED_IRQSENABLED  2
-#define LED_STACKCREATED 3
-#define LED_INIRQ        4
-#define LED_SIGNAL       5
-#define LED_ASSERTION    6
-#define LED_PANIC        7
+/****************************************************************************
+ * Pre-preprocessor Definitions
+ ****************************************************************************/
+#define GPIO_BASE        0x80000000
+#define GPIO_OUT_REG     0x0
+#define GPIO_IN_REG      0x4
+#define GPIO_IN_DBNC_REG 0x8
+#define GPIO_OUT         (GPIO_BASE + GPIO_OUT_REG)
+#define GPIO_IN          (GPIO_BASE + GPIO_IN_REG)
+#define GPIO_IN_DBNC     (GPIO_BASE + GPIO_IN_DBNC_REG)
 
-// Basys3 LEDs
-#define BOARD_LED0_MASK   0x1
-#define BOARD_LED_MASK(n) (BOARD_LED0_MASK << n)
-
-#endif /* __BOARDS_RISCV_IBEX_BASYS3_INCLUDE_BOARD_H */
-
+#endif /* __ARCH_RISCV_SRC_IBEX_HARDWARE_IBEX_GPIO_H */

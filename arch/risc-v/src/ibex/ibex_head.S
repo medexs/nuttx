@@ -1,0 +1,73 @@
+/****************************************************************************
+ * arch/risc-v/src/ibex/ibex_head.S
+ *
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.  The
+ * ASF licenses this file to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance with the
+ * License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
+ * License for the specific language governing permissions and limitations
+ * under the License.
+ *
+ ****************************************************************************/
+
+/****************************************************************************
+ * Included Files
+ ****************************************************************************/
+#include "riscv_internal.h"
+#include "riscv_vectors.S"
+#include "riscv_exception_common.S"
+
+/****************************************************************************
+ * Public Symbols
+ ****************************************************************************/
+/* Imported symbols */
+.extern __trap_vec
+
+.global __start
+
+/****************************************************************************
+ * Section: .text
+ ****************************************************************************/
+.section .text
+
+/****************************************************************************
+ * Name: __start
+ ****************************************************************************/
+__start:
+	.option push     /* Save current options which are later restored */
+  .option norelax  /* Tells linker to don't relax */
+
+  /* Set stack pointer to the idle thread stack */
+  la sp, _ebss
+  li t0, SMP_STACK_SIZE
+  add sp, sp, t0
+
+  /* Set gp pointer */
+  // TODO: set value of '__global_pointer' in linker script
+  la gp, __global_pointer$
+
+  /* Disable all interrupts (i.e. timer, external) in mstatus */
+  csrw CSR_MSTATUS, zero
+
+  /* Restore saved options */
+	.option pop
+
+  /* Initialize the Machine Trap Vector */
+  /* at '__trap_vec' (riscv_vectors.S) there's a jump to 'exception_common'
+     (risc_exception_common.S) where all exceptions/intterupts are handled */
+  la t0, __trap_vec
+  csrw CSR_MTVEC, t0
+
+  /* Jump to __ibex_start */
+  jal  x1, __ibex_start
+
+  /* We shouldn't return from __ibex_start */
+  ret

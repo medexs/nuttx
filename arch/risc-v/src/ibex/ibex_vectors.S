@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/risc-v/src/ibex/ibex_head.S
+ * arch/risc-v/src/ibex/ibex_vectors.S
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -21,51 +21,27 @@
 /****************************************************************************
  * Included Files
  ****************************************************************************/
-#include "riscv_internal.h"
-#include "ibex_vectors.S"
-#include "riscv_exception_common.S"
 
-/****************************************************************************
- * Public Symbols
- ****************************************************************************/
-/* Imported symbols */
-.extern __vector_table
-
-.global __start
-
-/****************************************************************************
- * Section: .text
- ****************************************************************************/
 .section .text
+.balign 256
+.global  __vector_table
 
 /****************************************************************************
- * Name: __start
+ * Name: __vector_table
+ *
+ * Description:
+ *   Like in riscv_vectors.s, all M-mode exceptions and interrupts will be
+ *   handled from here. If kernel is in S-mode delegated exceptions and
+ *   interrupts are handled. Label '__vector_table' is aligned to 256 because
+ *   Ibex needs contents of mtvec aligned to 256B. The vector table consists
+ *   of 32 same vectors, because for now, Ibex can only have mtvec.mode set to
+ *   vectored.
  ****************************************************************************/
-__start:
-	.option push     /* Save current options which are later restored */
-  .option norelax  /* Tells linker to don't relax */
+__vector_table:
+	.option push
+  .option norvc
 
-  /* Set stack pointer to the idle thread stack */
-  la sp, _ebss
-  li t0, SMP_STACK_SIZE
-  add sp, sp, t0
+  .rept (32)
+  j exception_common
+  .endr
 
-  /* Set gp pointer */
-  // TODO: set value of '__global_pointer' in linker script
-  la gp, __global_pointer$
-
-  /* Disable all interrupts (i.e. timer, external) in mstatus */
-  csrw CSR_MSTATUS, zero
-
-  /* Restore saved options */
-	.option pop
-
-  /* Initialize the Machine Trap Vector */
-  la t0, __vector_table
-  csrw CSR_MTVEC, t0
-
-  /* Jump to __ibex_start */
-  jal  x1, __ibex_start
-
-  /* We shouldn't return from __ibex_start */
-  ret

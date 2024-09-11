@@ -21,18 +21,6 @@
 /****************************************************************************
  * Included Files
  ****************************************************************************/
-
-#include <nuttx/config.h>
-
-#include <stdbool.h>
-#include <stdint.h>
-#include <assert.h>
-#include <errno.h>
-#include <debug.h>
-
-#include <nuttx/irq.h>
-#include <nuttx/arch.h>
-
 #include "riscv_internal.h"
 
 #include "ibex_irq.h"

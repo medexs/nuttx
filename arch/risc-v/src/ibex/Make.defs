@@ -23,4 +23,4 @@
 HEAD_ASRC += ibex_head.S
 CHIP_ASRC += ibex_vectors.S
 
-CHIP_CSRCS += ibex_gpio.c
+CHIP_CSRCS += ibex_start.c

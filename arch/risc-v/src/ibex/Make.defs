@@ -18,7 +18,7 @@
 #
 ############################################################################
 
-# include common/Make.defs
+include common/Make.defs
 
 HEAD_ASRC += ibex_head.S
 CHIP_ASRC += ibex_vectors.S

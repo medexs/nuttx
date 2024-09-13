@@ -23,7 +23,8 @@
  ****************************************************************************/
 #include <arch/board/board.h>
 
-#include "ibex_gpio.h"
+#include "riscv_internal.h"
+
 #include "hardware/ibex_gpio.h"
 
 /****************************************************************************
@@ -41,7 +42,7 @@ void board_autoled_initialize(void)
 {
 	// Turn all LEDs off
 	// TODO: set only LED pins to 0, but the rest of GPIO_OUT has to be defined
-	ibex_gpio_write(GPIO_OUT, 0);
+	putreg32(GPIO_OUT, 0);
 }
 
 /****************************************************************************
@@ -49,8 +50,7 @@ void board_autoled_initialize(void)
  ****************************************************************************/
 void board_autoled_on(int led)
 {
-	uint32_t curr_val = ibex_gpio_read(GPIO_OUT);
-	ibex_gpio_write(GPIO_OUT, curr_val | led);
+	modifyreg32(GPIO_OUT, 0, led);
 }
 
 /****************************************************************************
@@ -58,6 +58,5 @@ void board_autoled_on(int led)
  ****************************************************************************/
 void board_autoled_off(int led)
 {
-	uint32_t curr_val = ibex_gpio_read(GPIO_OUT);
-	ibex_gpio_write(GPIO_OUT, curr_val & ~led);
+	modifyreg32(GPIO_OUT, led, 0);
 }

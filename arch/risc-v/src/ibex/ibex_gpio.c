@@ -41,12 +41,12 @@
  * Name: ibex_gpio_write
  *
  * Description:
- *   Write data to GPIO register at addr
+ *   Atomically write data to GPIO register at addr
  *
  ****************************************************************************/
 void ibex_gpio_write(uint32_t addr, uint32_t data)
 {
-	putreg32(data, addr);
+	modifyreg32(addr, 0, data);
 }
 
 /****************************************************************************

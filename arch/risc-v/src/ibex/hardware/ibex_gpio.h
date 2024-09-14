@@ -28,12 +28,12 @@
 /****************************************************************************
  * Pre-preprocessor Definitions
  ****************************************************************************/
-#define GPIO_BASE        0x80000000
-#define GPIO_OUT_REG     0x0
-#define GPIO_IN_REG      0x4
-#define GPIO_IN_DBNC_REG 0x8
-#define GPIO_OUT         (GPIO_BASE + GPIO_OUT_REG)
-#define GPIO_IN          (GPIO_BASE + GPIO_IN_REG)
-#define GPIO_IN_DBNC     (GPIO_BASE + GPIO_IN_DBNC_REG)
+#define GPIO_BASE         0x80000000
+#define GPIO_OUT_REG      0x0
+#define GPIO_IN_REG       0x4
+#define GPIO_IN_DBNC_REG  0x8
+#define GPIO_OUT          (GPIO_BASE + GPIO_OUT_REG)
+#define GPIO_IN           (GPIO_BASE + GPIO_IN_REG)
+#define GPIO_IN_DBNC      (GPIO_BASE + GPIO_IN_DBNC_REG)
 
 #endif /* __ARCH_RISCV_SRC_IBEX_HARDWARE_IBEX_GPIO_H */

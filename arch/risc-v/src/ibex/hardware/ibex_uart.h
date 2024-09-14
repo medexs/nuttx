@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/risc-v/src/ibex/ibex_irq.c
+ * arch/risc-v/src/ibex/hardware/ibex_uart.h
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,47 +18,26 @@
  *
  ****************************************************************************/
 
+#ifndef __ARCH_RISCV_SRC_IBEX_HARDWARE_IBEX_UART_H
+#define __ARCH_RISCV_SRC_IBEX_HARDWARE_IBEX_UART_H
+
 /****************************************************************************
  * Included Files
  ****************************************************************************/
-#include "riscv_internal.h"
-
-#include "ibex_irq.h"
 
 /****************************************************************************
- * Pre-processor Definitions
+ * Pre-preprocessor Definitions
  ****************************************************************************/
+#define UART0_BASE        0x80001000
+#define UART0_RX_REG      0x0
+#define UART0_TX_REG      0x4
+#define UART0_STATUS_REG  0x8
+#define UART0_RX          (UART0_BASE + UART0_RX_REG)
+#define UART0_TX          (UART0_BASE + UART0_TX_REG)
+#define UART0_STATUS      (UART0_BASE + UART0_STATUS_REG)
 
-/****************************************************************************
- * Public Functions
- ****************************************************************************/
+#define UART_STATUS_RX_EMPTY_MASK  0x1
+#define UART_STATUS_TX_FULL_MASK   0x2
+#define UART_STATUS_TX_EMPTY_MASK  0x4
 
-/****************************************************************************
- * Name: riscv_dispatch_irq
- *
- * Description:
- *   Process interrupt and its callback function.
- *
- * Input Parameters:
- *   mcause - RISC-V "mcause" register.
- *   regs   - Saved registers reference.
- *
- * Returned Value:
- *   None.
- *
- ****************************************************************************/
-void * riscv_dispatch_irq(uintptr_t mcause, uintreg_t * regs)
-{
-  /* Get exception code */
-  int irq = mcause & RISCV_IRQ_MASK;
-
-  /* If current is interrupt and not exception */
-  if (mcause & RISCV_IRQ_BIT)
-    /* In NuttX vector table, IRQ's are located at RISCV_IRQ_ASYNC and beyond */
-    irq += RISCV_IRQ_ASYNC;
-
-  /* Deliver the IRQ */
-  regs = riscv_doirq(irq, regs);
-
-  return regs;
-}
+#endif /* __ARCH_RISCV_SRC_IBEX_HARDWARE_IBEX_UART_H */

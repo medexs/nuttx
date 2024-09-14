@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/risc-v/src/ibex/ibex_irq.c
+ * arch/risc-v/src/ibex/ibex_serial.h
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,47 +18,34 @@
  *
  ****************************************************************************/
 
-/****************************************************************************
- * Included Files
- ****************************************************************************/
-#include "riscv_internal.h"
-
-#include "ibex_irq.h"
+#ifndef __ARCH_RISC_V_SRC_IBEX_IBEX_SERIAL_H
+#define __ARCH_RISC_V_SRC_IBEX_IBEX_SERIAL_H
 
 /****************************************************************************
- * Pre-processor Definitions
+ * Public Functions Prototypes
  ****************************************************************************/
 
 /****************************************************************************
- * Public Functions
- ****************************************************************************/
-
-/****************************************************************************
- * Name: riscv_dispatch_irq
+ * Name: ibex_earlyserialinit
  *
  * Description:
- *   Process interrupt and its callback function.
- *
- * Input Parameters:
- *   mcause - RISC-V "mcause" register.
- *   regs   - Saved registers reference.
- *
- * Returned Value:
- *   None.
+ *   Performs the low level UART initialization early in debug so that the
+ *   serial console will be available during bootup.  This must be called
+ *   before riscv_serialinit.  NOTE:  This function depends on GPIO pin
+ *   configuration performed in up_consoleinit() and main clock
+ *   initialization performed in up_clkinitialize().
  *
  ****************************************************************************/
-void * riscv_dispatch_irq(uintptr_t mcause, uintreg_t * regs)
-{
-  /* Get exception code */
-  int irq = mcause & RISCV_IRQ_MASK;
+void ibex_earlyserialinit(void);
 
-  /* If current is interrupt and not exception */
-  if (mcause & RISCV_IRQ_BIT)
-    /* In NuttX vector table, IRQ's are located at RISCV_IRQ_ASYNC and beyond */
-    irq += RISCV_IRQ_ASYNC;
+/****************************************************************************
+ * Name: ibex_serialinit
+ *
+ * Description:
+ *   Register serial console and serial ports.  This assumes
+ *   that riscv_earlyserialinit was called previously.
+ *
+ ****************************************************************************/
+void ibex_serialinit(void);
 
-  /* Deliver the IRQ */
-  regs = riscv_doirq(irq, regs);
-
-  return regs;
-}
+#endif /* __ARCH_RISC_V_SRC_IBEX_IBEX_SERIAL_H */

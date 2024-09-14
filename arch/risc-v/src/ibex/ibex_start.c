@@ -37,6 +37,10 @@
 
 void __ibex_start(void)
 { 
+#ifdef USE_EARLYSERIALINIT
+  riscv_earlyserialinit();
+#endif
+
   /* Bring up NuttX */
   nx_start();
 

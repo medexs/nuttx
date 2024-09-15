@@ -30,7 +30,7 @@ ENTRY(__start)
 SECTIONS
 {
   /* Ibex boots at ram.ORIGIN + 0x80 */
-  .text 0x00100000 + 0x80 :
+  .text :
   {
     _stext = . ;
     *(.text)

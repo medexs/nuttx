@@ -112,8 +112,8 @@ static const struct uart_ops_s g_uart_ops =
 /* UART0 private info */
 static struct ibex_uart_s g_uart0priv =
 {
-  .rx_irq = UART0_RX_IRQ,
-  .tx_irq = UART0_TX_IRQ,
+  .rx_irq = UART0_RX_IRQ + RISCV_IRQ_ASYNC,
+  .tx_irq = UART0_TX_IRQ + RISCV_IRQ_ASYNC,
   .config =
   {
     .idx       = 0,
@@ -231,11 +231,11 @@ static int ibex_attach(struct uart_dev_s *dev)
 {
   struct ibex_uart_s *priv = (struct ibex_uart_s *)dev->priv;
 
-  int ret = irq_attach(priv->rx_irq + RISCV_IRQ_ASYNC, __ibex_rx_irq_handler, (void *)dev);
+  int ret = irq_attach(priv->rx_irq, __ibex_rx_irq_handler, (void *)dev);
   if (ret != OK)
     return ret;
 
-  ret = irq_attach(priv->tx_irq + RISCV_IRQ_ASYNC, __ibex_tx_irq_handler, (void *)dev);
+  ret = irq_attach(priv->tx_irq, __ibex_tx_irq_handler, (void *)dev);
 
   return ret;
 }
@@ -253,8 +253,8 @@ static void ibex_detach(struct uart_dev_s *dev)
 {
   struct ibex_uart_s *priv = (struct ibex_uart_s *)dev->priv;
 
-  irq_detach(priv->rx_irq + RISCV_IRQ_ASYNC);
-  irq_detach(priv->tx_irq + RISCV_IRQ_ASYNC);
+  irq_detach(priv->rx_irq);
+  irq_detach(priv->tx_irq);
 }
 
 /****************************************************************************

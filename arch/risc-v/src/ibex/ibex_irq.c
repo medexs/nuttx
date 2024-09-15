@@ -101,6 +101,40 @@ irqstate_t up_irq_enable(void)
 }
 
 /****************************************************************************
+ * Name: up_enable_irq
+ *
+ * Description:
+ *   On many architectures, there are three levels of interrupt enabling: (1)
+ *   at the global level, (2) at the level of the interrupt controller,
+ *   and (3) at the device level.  In order to receive interrupts, they
+ *   must be enabled at all three levels.
+ *
+ *   This function implements enabling of the device specified by 'irq'
+ *   at the interrupt controller level if supported by the architecture
+ *   (up_irq_restore() supports the global level, the device level is
+ *   hardware specific).
+ *
+ *   Since this API is not supported on all architectures, it should be
+ *   avoided in common implementations where possible.
+ *
+ ****************************************************************************/
+void up_enable_irq(int irq)
+{
+  int custom_irq = irq - RISCV_IRQ_ASYNC;
+
+  if (irq == RISCV_IRQ_MSOFT)
+    SET_CSR(CSR_MIE, MIE_MSIE);
+  else if (irq == RISCV_IRQ_MTIMER)
+    SET_CSR(CSR_MIE, MIE_MTIE);
+  else if (irq == RISCV_IRQ_MEXT)
+    SET_CSR(CSR_MIE, MIE_MEIE);
+  else if (custom_irq >= 16 && custom_irq <= 31)
+    SET_CSR(CSR_MIE, (1 << custom_irq));
+  else
+    PANIC();
+}
+
+/****************************************************************************
  * Name: up_disable_irq
  *
  * Description:

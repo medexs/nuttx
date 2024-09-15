@@ -22,6 +22,7 @@
  * Included Files
  ****************************************************************************/
 #include <nuttx/serial/serial.h>
+#include <nuttx/arch.h>
 
 #include "riscv_internal.h"
 
@@ -300,9 +301,9 @@ static void ibex_rxint(struct uart_dev_s *dev, bool enable)
   struct ibex_uart_s *priv = (struct ibex_uart_s *)dev->priv;
   
   if (enable)
-    SET_CSR(CSR_MIE, (1 << priv->rx_irq));
+    up_enable_irq(priv->rx_irq);
   else
-    CLEAR_CSR(CSR_MIE, (1 << priv->rx_irq));
+    up_disable_irq(priv->rx_irq);
 }
 
 /****************************************************************************
@@ -344,9 +345,9 @@ static void ibex_txint(struct uart_dev_s *dev, bool enable)
   struct ibex_uart_s *priv = (struct ibex_uart_s *)dev->priv;
   
   if (enable)
-    SET_CSR(CSR_MIE, (1 << priv->tx_irq));
+    up_enable_irq(priv->tx_irq);
   else
-    CLEAR_CSR(CSR_MIE, (1 << priv->tx_irq));
+    up_disable_irq(priv->tx_irq);
 }
 
 /****************************************************************************

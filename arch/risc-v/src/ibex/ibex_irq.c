@@ -99,3 +99,32 @@ irqstate_t up_irq_enable(void)
   irqstate_t flags = READ_AND_SET_CSR(CSR_MSTATUS, MSTATUS_MIE);
   return flags;
 }
+
+/****************************************************************************
+ * Name: up_disable_irq
+ *
+ * Description:
+ *   This function implements disabling of the device specified by 'irq'
+ *   at the interrupt controller level if supported by the architecture
+ *   (up_irq_save() supports the global level, the device level is hardware
+ *   specific).
+ *
+ *   Since this API is not supported on all architectures, it should be
+ *   avoided in common implementations where possible.
+ *
+ ****************************************************************************/
+void up_disable_irq(int irq)
+{
+  int custom_irq = irq - RISCV_IRQ_ASYNC;
+
+  if (irq == RISCV_IRQ_MSOFT)
+    CLEAR_CSR(CSR_MIE, MIE_MSIE);
+  else if (irq == RISCV_IRQ_MTIMER)
+    CLEAR_CSR(CSR_MIE, MIE_MTIE);
+  else if (irq == RISCV_IRQ_MEXT)
+    CLEAR_CSR(CSR_MIE, MIE_MEIE);
+  else if (custom_irq >= 16 && custom_irq <= 31)
+    CLEAR_CSR(CSR_MIE, (1 << custom_irq));
+  else
+    PANIC();
+}

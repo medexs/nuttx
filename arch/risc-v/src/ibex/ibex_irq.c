@@ -85,3 +85,17 @@ void up_irqinitialize(void)
   up_irq_enable();
 #endif
 }
+
+/****************************************************************************
+ * Name: up_irq_enable
+ *
+ * Description:
+ *   Return the current interrupt state and enable interrupts
+ *
+ ****************************************************************************/
+irqstate_t up_irq_enable(void)
+{
+  /* Read mstatus & set machine interrupt enable (MIE) in mstatus */
+  irqstate_t flags = READ_AND_SET_CSR(CSR_MSTATUS, MSTATUS_MIE);
+  return flags;
+}

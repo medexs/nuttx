@@ -23,4 +23,4 @@ include common/Make.defs
 HEAD_ASRC += ibex_head.S
 CHIP_ASRC += ibex_vectors.S
 
-CHIP_CSRCS += ibex_start.c ibex_gpio.c ibex_irq.c ibex_serial.c
+CHIP_CSRCS += ibex_start.c ibex_gpio.c ibex_irq.c ibex_serial.c ibex_timerisr.c

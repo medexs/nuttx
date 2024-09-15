@@ -62,3 +62,26 @@ void * riscv_dispatch_irq(uintptr_t mcause, uintreg_t * regs)
 
   return regs;
 }
+
+/****************************************************************************
+ * Name: up_irqinitialize
+ ****************************************************************************/
+void up_irqinitialize(void)
+{
+  /* Disable Machine interrupts */
+  up_irq_save();
+
+#if defined(CONFIG_STACK_COLORATION) && CONFIG_ARCH_INTERRUPTSTACK > 15
+  /* Colorize the interrupt stack for debug purposes */
+  size_t intstack_size = (CONFIG_ARCH_INTERRUPTSTACK & ~15);
+  riscv_stack_color(g_intstackalloc, intstack_size);
+#endif
+
+  /* Attach the common interrupt handler */
+  riscv_exception_attach();
+
+#ifndef CONFIG_SUPPRESS_INTERRUPTS
+  /* And finally, enable interrupts */
+  up_irq_enable();
+#endif
+}

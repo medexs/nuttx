@@ -33,10 +33,8 @@
 
 /* IRQs: SW + timer + external + 15 fast local + non-maskable */
 #define IBEX_NR_IRQS (1 + 1 + 1 + 15 + 1)
-/* Exception codes: 1, 2, 3, 5, 7, 8, 11 */
-#define IBEX_NR_EXCEPTIONS 7
 /* Number of available IRQ's - needed by NuttX */
-#define NR_IRQS (IBEX_NR_IRQS + IBEX_NR_EXCEPTIONS)
+#define NR_IRQS (IBEX_NR_IRQS + RISCV_IRQ_ASYNC)
 
 /* IRQ numbers assignments */
 #define UART0_RX_IRQ 16

@@ -18,11 +18,13 @@
  *
  ****************************************************************************/
 
+#include <nuttx/config.h>
+
 OUTPUT_ARCH("riscv")
 
 MEMORY
 {
-  ram : ORIGIN = 0x00100000, LENGTH = 64K
+  ram : ORIGIN = CONFIG_RAM_START, LENGTH = CONFIG_RAM_SIZE
 }
 
 ENTRY(__start)

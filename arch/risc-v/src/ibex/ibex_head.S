@@ -42,23 +42,19 @@
  * Name: __start
  ****************************************************************************/
 __start:
-	.option push     /* Save current options which are later restored */
-  .option norelax  /* Tells linker to don't relax */
+	/* Set gp pointer */
+  .option push /* Save current options which are later restored */
+  .option norelax
+  la gp, __global_pointer$
+	.option pop  /* Restore saved options */
 
   /* Set stack pointer to the idle thread stack */
   la sp, _ebss
   li t0, SMP_STACK_SIZE
   add sp, sp, t0
 
-  /* Set gp pointer */
-  // TODO: set value of '__global_pointer' in linker script
-  la gp, __global_pointer$
-
   /* Disable all interrupts (i.e. timer, external) in mstatus */
   csrw CSR_MSTATUS, zero
-
-  /* Restore saved options */
-	.option pop
 
   /* Initialize the Machine Trap Vector */
   la t0, __vector_table

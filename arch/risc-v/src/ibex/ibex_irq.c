@@ -21,6 +21,9 @@
 /****************************************************************************
  * Included Files
  ****************************************************************************/
+#include <nuttx/board.h>
+#include <arch/board/board.h>
+
 #include "riscv_internal.h"
 
 #include "ibex_irq.h"
@@ -52,6 +55,9 @@ void * riscv_dispatch_irq(uintptr_t mcause, uintreg_t * regs)
   /* Get exception code */
   int irq = mcause & RISCV_IRQ_MASK;
 
+  /* Acknowledge the interrupt */
+  riscv_ack_irq(irq);
+
   /* If current is interrupt and not exception */
   if (mcause & RISCV_IRQ_BIT)
     /* In NuttX vector table, IRQ's are located at RISCV_IRQ_ASYNC and beyond */
@@ -61,6 +67,20 @@ void * riscv_dispatch_irq(uintptr_t mcause, uintreg_t * regs)
   regs = riscv_doirq(irq, regs);
 
   return regs;
+}
+
+/****************************************************************************
+ * Name: riscv_ack_irq
+ *
+ * Description:
+ *   Acknowledge the IRQ
+ *
+ ****************************************************************************/
+void riscv_ack_irq(int irq)
+{
+#ifdef CONFIG_ARCH_LEDS_CPU_ACTIVITY
+  board_autoled_on(LED_CPU);
+#endif
 }
 
 /****************************************************************************

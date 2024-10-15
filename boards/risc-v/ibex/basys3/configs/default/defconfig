@@ -1,4 +1,3 @@
-# Necessary variables for running tools/configure.sh
 # Arch
 CONFIG_ARCH="risc-v"
 CONFIG_ARCH_RISCV=y

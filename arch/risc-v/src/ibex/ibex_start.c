@@ -23,6 +23,8 @@
  ****************************************************************************/
 #include <nuttx/init.h>
 
+#include <riscv_internal.h>
+
 /****************************************************************************
  * Pre-processor Definitions
  ****************************************************************************/
@@ -32,14 +34,31 @@
  ****************************************************************************/
 
 /****************************************************************************
+ * Name: ibex_clear_bss
+ *
+ * Description:
+ *   Clear .bss. We'll do this inline (vs. calling memset) just to be
+ *   certain that there are no issues with the state of global variables.
+ *
+ ****************************************************************************/
+static void ibex_clear_bss(void)
+{
+  uint32_t *dest;
+  for (dest = (uint32_t *)_sbss; dest < (uint32_t *)_ebss; )
+    *dest++ = 0;
+}
+
+/****************************************************************************
  * Name: __ibex_start
  ****************************************************************************/
-
 void __ibex_start(void)
 { 
 #ifdef USE_EARLYSERIALINIT
   riscv_earlyserialinit();
 #endif
+
+  /* Clear .bss section */
+  ibex_clear_bss();
 
   /* Bring up NuttX */
   nx_start();

@@ -78,6 +78,7 @@ void * riscv_dispatch_irq(uintptr_t mcause, uintreg_t * regs)
  ****************************************************************************/
 void riscv_ack_irq(int irq)
 {
+  UNUSED(irq);
 #ifdef CONFIG_ARCH_LEDS_CPU_ACTIVITY
   board_autoled_on(LED_CPU);
 #endif

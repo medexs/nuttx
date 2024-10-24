@@ -186,7 +186,7 @@ static int __ibex_tx_irq_handler(int irq, void *context, void *arg)
   return OK;
 }
 
-/* UART operations*/
+/* UART operations */
 
 /****************************************************************************
  * Name: ibex_setup

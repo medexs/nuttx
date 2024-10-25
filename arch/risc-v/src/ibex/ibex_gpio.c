@@ -24,6 +24,7 @@
 #include "riscv_internal.h"
 
 #include <stdint.h>
+#include <debug.h>
 
 /****************************************************************************
  * Pre-processor Definitions
@@ -46,6 +47,7 @@
  ****************************************************************************/
 void ibex_gpio_write(uint32_t addr, uint32_t data)
 {
+	gpioinfo("GPIOINFO: writing data=0x%lx to addr=0x%lx\n", data, addr);
 	modifyreg32(addr, 0, data);
 }
 
@@ -58,5 +60,7 @@ void ibex_gpio_write(uint32_t addr, uint32_t data)
  ****************************************************************************/
 uint32_t ibex_gpio_read(uint32_t addr)
 {
-	return getreg32(addr);
+	uint32_t data = getreg32(addr);
+	gpioinfo("GPIOINFO: read data=0x%lx from addr=0x%lx\n", data, addr);
+	return data;
 }

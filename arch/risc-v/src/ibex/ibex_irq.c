@@ -23,6 +23,7 @@
  ****************************************************************************/
 #include <nuttx/board.h>
 #include <arch/board/board.h>
+#include <debug.h>
 
 #include "riscv_internal.h"
 
@@ -53,13 +54,17 @@
 void * riscv_dispatch_irq(uintptr_t mcause, uintreg_t * regs)
 {
   /* Get exception code */
+  uint32_t is_interrupt = mcause & RISCV_IRQ_BIT;
   int irq = mcause & RISCV_IRQ_MASK;
+
+  irqinfo("IRQINFO: Dispatching trap: mcause[31]=%d, mcause[30:0]=%d\n",
+          is_interrupt ? 1 : 0, irq);
 
   /* Acknowledge the interrupt */
   riscv_ack_irq(irq);
 
   /* If current is interrupt and not exception */
-  if (mcause & RISCV_IRQ_BIT)
+  if (is_interrupt)
     /* In NuttX vector table, IRQ's are located at RISCV_IRQ_ASYNC and beyond */
     irq += RISCV_IRQ_ASYNC;
 
@@ -152,7 +157,10 @@ void up_enable_irq(int irq)
   else if (custom_irq >= 16 && custom_irq <= 31)
     SET_CSR(CSR_MIE, (1 << custom_irq));
   else
+  {
+    irqerr("IRQERR: Unknown irq=%d or custom_irq=%d\n", irq, custom_irq);
     PANIC();
+  }
 }
 
 /****************************************************************************
@@ -181,5 +189,8 @@ void up_disable_irq(int irq)
   else if (custom_irq >= 16 && custom_irq <= 31)
     CLEAR_CSR(CSR_MIE, (1 << custom_irq));
   else
+  {
+    irqerr("IRQERR: Unknown irq=%d or custom_irq=%d\n", irq, custom_irq);
     PANIC();
+  }
 }

@@ -28,6 +28,8 @@
 
 #include "hardware/ibex_uart.h"
 
+#include <debug.h>
+
 /****************************************************************************
  * Pre-processor Definitions
  ****************************************************************************/
@@ -233,9 +235,21 @@ static int ibex_attach(struct uart_dev_s *dev)
 
   int ret = irq_attach(priv->rx_irq, __ibex_rx_irq_handler, (void *)dev);
   if (ret != OK)
+  {
+    irqerr("IRQERR: Failed to attach rx_irq handler\n");
     return ret;
+  }
+  irqinfo("IRQINFO: Attached rx_irq handler\n");
 
   ret = irq_attach(priv->tx_irq, __ibex_tx_irq_handler, (void *)dev);
+#ifdef CONFIG_DEBUG_IRQ_ERR
+  if (ret != OK)
+    irqerr("IRQERR: Failed to attach tx_irq handler\n");
+  else
+#endif
+#ifdef CONFIG_DEBUG_IRQ_INFO
+    irqinfo("IRQINFO: Attached tx_irq handler\n");
+#endif
 
   return ret;
 }

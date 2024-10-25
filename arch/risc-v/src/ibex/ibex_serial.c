@@ -451,3 +451,32 @@ void riscv_serialinit(void)
 {
   ibex_serialinit();
 }
+
+/****************************************************************************
+ * Name: up_putc
+ *
+ * Description:
+ *   Provide priority, low-level access to support OS debug  writes
+ *
+ ****************************************************************************/
+int up_putc(int ch)
+{
+  irqstate_t flags = enter_critical_section();
+
+  /* Check for LF */
+  if (ch == '\n')
+  {
+    /* Add CR */
+    
+    /* Wait until there is space for a byte in TX fifo */
+    while(getreg32(UART0_STATUS) & UART_STATUS_TX_FULL_MASK);
+    putreg32('\r', UART0_TX);
+  }
+
+  /* Wait until there is space for a byte in TX fifo */
+  while(getreg32(UART0_STATUS) & UART_STATUS_TX_FULL_MASK);
+  putreg32(ch, UART0_TX);
+
+  leave_critical_section(flags);
+  return ch;
+}

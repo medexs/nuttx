@@ -405,7 +405,9 @@ static bool ibex_txempty(struct uart_dev_s *dev)
  ****************************************************************************/
 void ibex_earlyserialinit(void)
 {
+  /* Initialize CONSOLE_DEV */
   CONSOLE_DEV.isconsole = true;
+
   ibex_setup(&CONSOLE_DEV);
 }
 
@@ -419,6 +421,10 @@ void ibex_earlyserialinit(void)
  ****************************************************************************/
 void ibex_serialinit(void)
 {
+  /* Initialize CONSOLE_DEV */
+  CONSOLE_DEV.open_count = 0;
+  CONSOLE_DEV.isconsole = true;
+
   /* Register the console */
   uart_register("/dev/console", &CONSOLE_DEV);
 }

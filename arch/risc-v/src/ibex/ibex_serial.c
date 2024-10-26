@@ -426,7 +426,7 @@ void ibex_serialinit(void)
   CONSOLE_DEV.isconsole = true;
 
   /* Register the console */
-  uart_register("/dev/console", &CONSOLE_DEV);
+  DEBUGVERIFY(uart_register("/dev/console", &CONSOLE_DEV));
 }
 
 /****************************************************************************

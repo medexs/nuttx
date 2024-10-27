@@ -54,17 +54,13 @@
 void * riscv_dispatch_irq(uintptr_t mcause, uintreg_t * regs)
 {
   /* Get exception code */
-  uint32_t is_interrupt = mcause & RISCV_IRQ_BIT;
   int irq = mcause & RISCV_IRQ_MASK;
-
-  irqinfo("IRQINFO: Dispatching trap: mcause[31]=%d, mcause[30:0]=%d\n",
-          is_interrupt ? 1 : 0, irq);
 
   /* Acknowledge the interrupt */
   riscv_ack_irq(irq);
 
   /* If current is interrupt and not exception */
-  if (is_interrupt)
+  if (mcause & RISCV_IRQ_BIT)
     /* In NuttX vector table, IRQ's are located at RISCV_IRQ_ASYNC and beyond */
     irq += RISCV_IRQ_ASYNC;
 

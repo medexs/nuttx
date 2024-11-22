@@ -32,11 +32,6 @@
 #include "hardware/ibex_timer.h"
 
 /****************************************************************************
- * Pre-processor Definitions
- ****************************************************************************/
-#define MTIMER_FREQ 10000000
-
-/****************************************************************************
  * Public Functions
  ****************************************************************************/
 
@@ -52,7 +47,7 @@ void up_timer_initialize(void)
 {
   struct oneshot_lowerhalf_s *lower = riscv_mtimer_initialize(
     TIMER_MTIME, TIMER_MTIMECMP,
-    RISCV_IRQ_MTIMER, MTIMER_FREQ);
+    RISCV_IRQ_MTIMER, TIMER_FREQ);
 
   DEBUGASSERT(lower);
 

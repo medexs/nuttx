@@ -273,6 +273,7 @@ config ARCH_CHIP_IBEX
 	select ARCH_RV_ISA_C
 	select ARCH_HAVE_RESET
 	select ARCH_HAVE_DEBUG
+	select ARCH_HAVE_TICKLESS
 	---help---
 		lowRISC Ibex (RV32IMC).
 

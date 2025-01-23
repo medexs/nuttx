@@ -40,4 +40,8 @@
 #define UART_STATUS_TX_FULL_MASK   0x2
 #define UART_STATUS_TX_EMPTY_MASK  0x4
 
+/* IRQ numbers assignments */
+#define UART0_RX_IRQ 16
+#define UART0_TX_IRQ 17
+
 #endif /* __ARCH_RISCV_SRC_IBEX_HARDWARE_IBEX_UART_H */

@@ -52,5 +52,4 @@ void up_timer_initialize(void)
   DEBUGASSERT(lower);
 
   up_alarm_set_lowerhalf(lower);
-  tmrinfo("TMRINFO: Timer initialized\n");
 }

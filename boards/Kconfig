@@ -1150,6 +1150,15 @@ config ARCH_BOARD_MOXA
 	---help---
 		Moxa
 
+config ARCH_BOARD_NEXYS_VIDEO
+	bool "DIGILENT Nexys Video board"
+	depends on ARCH_CHIP_IBEX
+	select ARCH_HAVE_LEDS
+	select ARCH_HAVE_BUTTONS
+	---help---
+		This is the board configuration for the port of NuttX to the Digilent Nexys
+		Video board. This board features the RISC-V Ibex softcore by lowRISC.
+
 config ARCH_BOARD_NE64BADGE
 	bool "FEG NE64 /PoE Badge board"
 	depends on ARCH_CHIP_MCS92S12NEC64
@@ -3402,6 +3411,7 @@ config ARCH_BOARD
 	default "misoc"                     if ARCH_BOARD_MISOC_QEMU || ARCH_BOARD_MISOC_VERILATOR
 	default "mizar32a"                  if ARCH_BOARD_MIZAR32A
 	default "moteino-mega"              if ARCH_BOARD_MOTEINO_MEGA
+	default "nexys-video"               if ARCH_BOARD_NEXYS_VIDEO
 	default "ne64badge"                 if ARCH_BOARD_NE64BADGE
 	default "nrf52-feather"             if ARCH_BOARD_NRF52_FEATHER
 	default "nrf52832-sparkfun"         if ARCH_BOARD_NRF52832_SPARKFUN
@@ -4419,6 +4429,9 @@ source "$BINDIR/boards/dummy/Kconfig"
 endif
 if ARCH_BOARD_DEMOS92S12NEC64
 source "boards/hc/m9s12/demo9s12ne64/Kconfig"
+endif
+if ARCH_BOARD_NEXYS_VIDEO
+source "boards/risc-v/ibex/nexys-video/Kconfig"
 endif
 if ARCH_BOARD_NE64BADGE
 source "boards/hc/m9s12/ne64badge/Kconfig"

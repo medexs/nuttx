@@ -20,8 +20,10 @@
 
 include $(TOPDIR)/Make.defs
 
+CSRCS += ibex_boardinit.c ibex_bringup.c
+
 ifeq ($(CONFIG_ARCH_LEDS),y)
-  CSRCS += basys3_autoleds.c
+  CSRCS += ibex_autoleds.c
 endif
 
 include $(TOPDIR)/boards/Board.mk

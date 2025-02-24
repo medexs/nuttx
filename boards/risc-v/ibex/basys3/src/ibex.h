@@ -1,5 +1,5 @@
 /****************************************************************************
- * boards/risc-v/ibex/nexys-video/src/ibex_appinit.c
+ * boards/risc-v/ibex/basys3/src/ibex.h
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,39 +18,25 @@
  *
  ****************************************************************************/
 
+#ifndef __BOARDS_RISCV_IBEX_BASYS3_SRC_IBEX_H
+#define __BOARDS_RISCV_IBEX_BASYS3_SRC_IBEX_H
+ 
 /****************************************************************************
  * Included Files
  ****************************************************************************/
-#include <nuttx/board.h>
- 
+#include <nuttx/config.h>
+
 /****************************************************************************
- * Public Functions
+ * Public Function Prototypes
  ****************************************************************************/
- 
+
 /****************************************************************************
- * Name: board_app_initialize
+ * Name: ibex_bringup
  *
  * Description:
- *   Perform architecture specific initialization
- *
- * Input Parameters:
- *   arg - The boardctl() argument is passed to the board_app_initialize()
- *         implementation without modification.  The argument has no
- *         meaning to NuttX; the meaning of the argument is a contract
- *         between the board-specific initialization logic and the
- *         matching application logic.  The value could be such things as a
- *         mode enumeration value, a set of DIP switch switch settings, a
- *         pointer to configuration data read from a file or serial FLASH,
- *         or whatever you would like to do with it.  Every implementation
- *         should accept zero/NULL as a default configuration.
- *
- * Returned Value:
- *   Zero (OK) is returned on success; a negated errno value is returned on
- *   any failure to indicate the nature of the failure.
+ *   Bring up board features
  *
  ****************************************************************************/
- 
-int board_app_initialize(uintptr_t arg)
-{
-    return 0;
-}
+int ibex_bringup(void);
+
+#endif /* __BOARDS_RISCV_IBEX_BASYS3_SRC_IBEX_H */

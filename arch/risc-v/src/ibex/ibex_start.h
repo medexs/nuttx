@@ -1,5 +1,5 @@
 /****************************************************************************
- * boards/risc-v/ibex/basys3/src/basys3_autoleds.c
+ * arch/risc-v/src/ibex/ibex_start.h
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,45 +18,35 @@
  *
  ****************************************************************************/
 
+#ifndef __ARCH_RISC_V_SRC_IBEX_IBEX_START_H
+#define __ARCH_RISC_V_SRC_IBEX_IBEX_START_H
+
 /****************************************************************************
  * Included Files
  ****************************************************************************/
-#include <arch/board/board.h>
-
-#include "riscv_internal.h"
-
-#include "hardware/ibex_gpio.h"
 
 /****************************************************************************
- * Pre-processor Definitions
+ * Public Function Prototypes
  ****************************************************************************/
 
 /****************************************************************************
- * Public Functions
+ * Name: ibex_board_initialize
+ *
+ * Description:
+ *   This initialization function is called in __ibex_start(). It should
+ *   not be called from common OS logic. It should initialize low-level
+ *   things like GPIO, power settings, DRAM initialization, etc.
+ *   The OS has not been initialized at this point, so you cannot allocate
+ *   memory or initialize device drivers.
+ *
+ * Input Parameters:
+ *   None
+ *
+ * Returned Value:
+ *   None
+ *
  ****************************************************************************/
+void ibex_board_initialize(void);
 
-/****************************************************************************
- * Name: board_autoled_initialize
- ****************************************************************************/
-void board_autoled_initialize(void)
-{
-	// Turn all LEDs off
-	// TODO: set only LED pins to 0, but the rest of GPIO_OUT has to be defined
-	putreg32(GPIO_OUT, 0);
-}
-
-/****************************************************************************
- * Name: board_autoled_on
- ****************************************************************************/
-void board_autoled_on(int led)
-{
-	modifyreg32(GPIO_OUT, 0, led);
-}
-
-/****************************************************************************
- * Name: board_autoled_off
- ****************************************************************************/
-void board_autoled_off(int led)
-{
-	modifyreg32(GPIO_OUT, led, 0);
-}
+#endif /* __ARCH_RISC_V_SRC_IBEX_IBEX_START_H */
+ 

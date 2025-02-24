@@ -1,5 +1,5 @@
 /****************************************************************************
- * boards/risc-v/ibex/nexys-video/src/nexys_video_autoleds.c
+ * boards/risc-v/ibex/basys3/src/ibex_bringup.c
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -21,42 +21,28 @@
 /****************************************************************************
  * Included Files
  ****************************************************************************/
-#include <arch/board/board.h>
+#include <nuttx/config.h>
 
-#include "riscv_internal.h"
-
-#include "hardware/ibex_gpio.h"
-
-/****************************************************************************
- * Pre-processor Definitions
- ****************************************************************************/
+#include <debug.h>
 
 /****************************************************************************
  * Public Functions
  ****************************************************************************/
 
 /****************************************************************************
- * Name: board_autoled_initialize
+ * Name: ibex_bringup
+ *
+ * Description:
+ *   Perform architecture-specific initialization
+ *
+ *   CONFIG_BOARD_LATE_INITIALIZE=y :
+ *     Called from board_late_initialize().
+ *
+ *   CONFIG_BOARD_LATE_INITIALIZE=n && CONFIG_BOARDCTL=y :
+ *     Called from the NSH library
+ *
  ****************************************************************************/
-void board_autoled_initialize(void)
+int ibex_bringup(void)
 {
-	// Turn all LEDs off
-	// TODO: set only LED pins to 0, but the rest of GPIO_OUT has to be defined
-	putreg32(GPIO_OUT, 0);
-}
-
-/****************************************************************************
- * Name: board_autoled_on
- ****************************************************************************/
-void board_autoled_on(int led)
-{
-	modifyreg32(GPIO_OUT, 0, led);
-}
-
-/****************************************************************************
- * Name: board_autoled_off
- ****************************************************************************/
-void board_autoled_off(int led)
-{
-	modifyreg32(GPIO_OUT, led, 0);
+  return OK;
 }

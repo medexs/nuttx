@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/risc-v/src/ibex/ibex_start.c
+ * boards/risc-v/ibex/basys3/src/ibex_autoleds.c
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -21,11 +21,11 @@
 /****************************************************************************
  * Included Files
  ****************************************************************************/
-#include <nuttx/init.h>
+#include <arch/board/board.h>
 
-#include <riscv_internal.h>
+#include "riscv_internal.h"
 
-#include "ibex_start.h"
+#include "hardware/ibex_gpio.h"
 
 /****************************************************************************
  * Pre-processor Definitions
@@ -36,37 +36,26 @@
  ****************************************************************************/
 
 /****************************************************************************
- * Name: ibex_clear_bss
- *
- * Description:
- *   Clear .bss. We'll do this inline (vs. calling memset) just to be
- *   certain that there are no issues with the state of global variables.
- *
+ * Name: board_autoled_initialize
  ****************************************************************************/
-static void ibex_clear_bss(void)
+void board_autoled_initialize(void)
 {
-  uint32_t *dest;
-  for (dest = (uint32_t *)_sbss; dest < (uint32_t *)_ebss; )
-    *dest++ = 0;
+	// Turn all LEDs off
+	modifyreg32(IBEX_GPIO_OUT, BOARD_ALL_LED_MASK, 0);
 }
 
 /****************************************************************************
- * Name: __ibex_start
+ * Name: board_autoled_on
  ****************************************************************************/
-void __ibex_start(void)
-{ 
-#ifdef USE_EARLYSERIALINIT
-  riscv_earlyserialinit();
-#endif
+void board_autoled_on(int led)
+{
+	modifyreg32(IBEX_GPIO_OUT, 0, led);
+}
 
-  /* Clear .bss section */
-  ibex_clear_bss();
-
-  /* Initialize board */
-  ibex_board_initialize();
-
-  /* Bring up NuttX */
-  nx_start();
-
-  for (; ; );
+/****************************************************************************
+ * Name: board_autoled_off
+ ****************************************************************************/
+void board_autoled_off(int led)
+{
+	modifyreg32(IBEX_GPIO_OUT, led, 0);
 }

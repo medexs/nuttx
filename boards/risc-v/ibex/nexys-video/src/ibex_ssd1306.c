@@ -56,12 +56,12 @@ static struct lcd_dev_s *g_lcddev;
 int board_lcd_initialize(void)
 {
   /* Power up and reset OLED */
-  modifyreg32(IBEX_GPIO_OUT, BOARD_OLED_VDD_MASK, 0);
+  modifyreg32(IBEX_GPIO_OUT, BOARD_OLED_VDD_N_MASK, 0);
   usleep(1 * 1000);
-  modifyreg32(IBEX_GPIO_OUT, BOARD_OLED_RST_MASK, 0);
+  modifyreg32(IBEX_GPIO_OUT, BOARD_OLED_RST_N_MASK, 0);
   usleep(3);
-  modifyreg32(IBEX_GPIO_OUT, 0, BOARD_OLED_RST_MASK);
-  modifyreg32(IBEX_GPIO_OUT, BOARD_OLED_VBAT_MASK, 0);
+  modifyreg32(IBEX_GPIO_OUT, 0, BOARD_OLED_RST_N_MASK);
+  modifyreg32(IBEX_GPIO_OUT, BOARD_OLED_VBAT_N_MASK, 0);
   usleep(100 * 1000);
 
   /* Initialize SPI */
@@ -101,7 +101,7 @@ struct lcd_dev_s *board_lcd_getdev(int lcddev)
 void board_lcd_uninitialize(void)
 {
   /* Power down OLED */
-  modifyreg32(IBEX_GPIO_OUT, 0, BOARD_OLED_VBAT_MASK);
+  modifyreg32(IBEX_GPIO_OUT, 0, BOARD_OLED_VBAT_N_MASK);
   usleep(100 * 1000);
-  modifyreg32(IBEX_GPIO_OUT, 0, BOARD_OLED_VDD_MASK);
+  modifyreg32(IBEX_GPIO_OUT, 0, BOARD_OLED_VDD_N_MASK);
 }

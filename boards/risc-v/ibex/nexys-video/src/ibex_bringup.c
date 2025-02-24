@@ -1,5 +1,5 @@
 /****************************************************************************
- * boards/risc-v/ibex/nexys-video/include/board.h
+ * boards/risc-v/ibex/nexys-video/src/ibex_bringup.c
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,39 +18,48 @@
  *
  ****************************************************************************/
 
-#ifndef __BOARDS_RISCV_IBEX_NEXYS_VIDEO_INCLUDE_BOARD_H
-#define __BOARDS_RISCV_IBEX_NEXYS_VIDEO_INCLUDE_BOARD_H
-
 /****************************************************************************
  * Included Files
  ****************************************************************************/
-#include <stdint.h>
+#include <nuttx/config.h>
+
+#include <syslog.h>
+#include <debug.h>
+
+#ifdef CONFIG_VIDEO_FB
+#include <nuttx/video/fb.h>
+#endif
 
 /****************************************************************************
- * Pre-processor Definitions
+ * Public Functions
  ****************************************************************************/
 
-// Nexys Video LEDs
-#define BOARD_LED_CNT       8
-#define BOARD_ALL_LED_MASK  ((BOARD_LED_CNT == 32) ? 0xFFFFFFFF : (((uint32_t)1 << BOARD_LED_CNT) - 1))
-#define BOARD_LED0_MASK     0x1
-#define BOARD_LED_MASK(n)   (BOARD_LED0_MASK << n)
+/****************************************************************************
+ * Name: ibex_bringup
+ *
+ * Description:
+ *   Perform architecture-specific initialization
+ *
+ *   CONFIG_BOARD_LATE_INITIALIZE=y :
+ *     Called from board_late_initialize().
+ *
+ *   CONFIG_BOARD_LATE_INITIALIZE=n && CONFIG_BOARDCTL=y :
+ *     Called from the NSH library
+ *
+ ****************************************************************************/
+int ibex_bringup(void)
+{
+  int ret;
 
-// Nexys Video OLED control (mapped to GPIO after LEDs)
-#define BOARD_OLED_VDD_MASK       BOARD_LED_MASK(BOARD_LED_CNT)
-#define BOARD_OLED_RES_MASK       BOARD_OLED_VDD_MASK << 1
-#define BOARD_OLED_VBAT_MASK      BOARD_OLED_RES_MASK << 1
-#define BOARD_OLED_DATA_CMD_MASK  BOARD_OLED_VBAT_MASK << 1
+#ifdef CONFIG_VIDEO_FB
+  ret = fb_register(0, 0);
+  if (ret < 0)
+  {
+    syslog(LOG_ERR, "ERROR: Failed to initialize Frame Buffer Driver.\n");
+    return ret;
+  }
+#endif
 
-// NuttX Event LEDs
-#define LED_CPU             BOARD_LED_MASK(0)
-//  #define LED_STARTED         BOARD_LED_MASK(1)
-#define LED_HEAPALLOCATE    BOARD_LED_MASK(1)
-#define LED_IRQSENABLED     BOARD_LED_MASK(2)
-#define LED_STACKCREATED    BOARD_LED_MASK(3)
-#define LED_INIRQ           BOARD_LED_MASK(4)
-#define LED_SIGNAL          BOARD_LED_MASK(5)
-#define LED_ASSERTION       BOARD_LED_MASK(6)
-#define LED_PANIC           BOARD_LED_MASK(7)
-
-#endif /* __BOARDS_RISCV_IBEX_NEXYS_VIDEO_INCLUDE_BOARD_H */
+  UNUSED(ret);
+  return OK;
+}

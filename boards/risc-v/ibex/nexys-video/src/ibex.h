@@ -1,5 +1,5 @@
 /****************************************************************************
- * boards/risc-v/ibex/nexys-video/include/board.h
+ * boards/risc-v/ibex/nexys-video/src/ibex.h
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,39 +18,25 @@
  *
  ****************************************************************************/
 
-#ifndef __BOARDS_RISCV_IBEX_NEXYS_VIDEO_INCLUDE_BOARD_H
-#define __BOARDS_RISCV_IBEX_NEXYS_VIDEO_INCLUDE_BOARD_H
-
+#ifndef __BOARDS_RISCV_IBEX_NEXYS_VIDEO_SRC_IBEX_H
+#define __BOARDS_RISCV_IBEX_NEXYS_VIDEO_SRC_IBEX_H
+ 
 /****************************************************************************
  * Included Files
  ****************************************************************************/
-#include <stdint.h>
+#include <nuttx/config.h>
 
 /****************************************************************************
- * Pre-processor Definitions
+ * Public Function Prototypes
  ****************************************************************************/
 
-// Nexys Video LEDs
-#define BOARD_LED_CNT       8
-#define BOARD_ALL_LED_MASK  ((BOARD_LED_CNT == 32) ? 0xFFFFFFFF : (((uint32_t)1 << BOARD_LED_CNT) - 1))
-#define BOARD_LED0_MASK     0x1
-#define BOARD_LED_MASK(n)   (BOARD_LED0_MASK << n)
+/****************************************************************************
+ * Name: ibex_bringup
+ *
+ * Description:
+ *   Bring up board features
+ *
+ ****************************************************************************/
+int ibex_bringup(void);
 
-// Nexys Video OLED control (mapped to GPIO after LEDs)
-#define BOARD_OLED_VDD_MASK       BOARD_LED_MASK(BOARD_LED_CNT)
-#define BOARD_OLED_RES_MASK       BOARD_OLED_VDD_MASK << 1
-#define BOARD_OLED_VBAT_MASK      BOARD_OLED_RES_MASK << 1
-#define BOARD_OLED_DATA_CMD_MASK  BOARD_OLED_VBAT_MASK << 1
-
-// NuttX Event LEDs
-#define LED_CPU             BOARD_LED_MASK(0)
-//  #define LED_STARTED         BOARD_LED_MASK(1)
-#define LED_HEAPALLOCATE    BOARD_LED_MASK(1)
-#define LED_IRQSENABLED     BOARD_LED_MASK(2)
-#define LED_STACKCREATED    BOARD_LED_MASK(3)
-#define LED_INIRQ           BOARD_LED_MASK(4)
-#define LED_SIGNAL          BOARD_LED_MASK(5)
-#define LED_ASSERTION       BOARD_LED_MASK(6)
-#define LED_PANIC           BOARD_LED_MASK(7)
-
-#endif /* __BOARDS_RISCV_IBEX_NEXYS_VIDEO_INCLUDE_BOARD_H */
+#endif /* __BOARDS_RISCV_IBEX_NEXYS_VIDEO_SRC_IBEX_H */

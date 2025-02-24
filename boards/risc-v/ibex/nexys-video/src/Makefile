@@ -20,12 +20,10 @@
 
 include $(TOPDIR)/Make.defs
 
-ifeq ($(CONFIG_BOARDCTL),y)
-  CSRCS += ibex_appinit.c
-endif
+CSRCS += ibex_boardinit.c ibex_bringup.c
 
 ifeq ($(CONFIG_ARCH_LEDS),y)
-  CSRCS += nexys_video_autoleds.c
+  CSRCS += ibex_autoleds.c
 endif
 
 include $(TOPDIR)/boards/Board.mk

@@ -114,8 +114,8 @@ static const struct uart_ops_s g_uart_ops =
 /* UART0 private info */
 static struct ibex_uart_s g_uart0priv =
 {
-  .rx_irq = UART0_RX_IRQ + RISCV_IRQ_ASYNC,
-  .tx_irq = UART0_TX_IRQ + RISCV_IRQ_ASYNC,
+  .rx_irq = IBEX_UART0_RX_IRQ + RISCV_IRQ_ASYNC,
+  .tx_irq = IBEX_UART0_TX_IRQ + RISCV_IRQ_ASYNC,
   .config =
   {
     .idx       = 0,
@@ -297,8 +297,8 @@ static int ibex_receive(struct uart_dev_s *dev, unsigned int *status)
   int rx_data = -1;
 
   /* Check if UART0s RX fifo is not empty */
-  if (!(getreg32(UART0_STATUS) & UART_STATUS_RX_EMPTY_MASK))
-    rx_data = getreg32(UART0_RX);
+  if (!(getreg32(IBEX_UART0_STATUS) & IBEX_UART_STATUS_RX_EMPTY_MASK))
+    rx_data = getreg32(IBEX_UART0_RX);
 
   return rx_data;
 }
@@ -329,7 +329,7 @@ static void ibex_rxint(struct uart_dev_s *dev, bool enable)
  ****************************************************************************/
 static bool ibex_rxavailable(struct uart_dev_s *dev)
 {
-  return !(getreg32(UART0_STATUS) & UART_STATUS_RX_EMPTY_MASK);
+  return !(getreg32(IBEX_UART0_STATUS) & IBEX_UART_STATUS_RX_EMPTY_MASK);
 }
 
 /****************************************************************************
@@ -342,9 +342,9 @@ static bool ibex_rxavailable(struct uart_dev_s *dev)
 static void ibex_send(struct uart_dev_s *dev, int ch)
 {
   /* Wait until there is space for a byte in TX fifo */
-  while(getreg32(UART0_STATUS) & UART_STATUS_TX_FULL_MASK);
+  while(getreg32(IBEX_UART0_STATUS) & IBEX_UART_STATUS_TX_FULL_MASK);
 
-  putreg32(ch, UART0_TX);
+  putreg32(ch, IBEX_UART0_TX);
 }
 
 /****************************************************************************
@@ -373,7 +373,7 @@ static void ibex_txint(struct uart_dev_s *dev, bool enable)
  ****************************************************************************/
 static bool ibex_txready(struct uart_dev_s *dev)
 {
-  return !(getreg32(UART0_STATUS) & UART_STATUS_TX_FULL_MASK);
+  return !(getreg32(IBEX_UART0_STATUS) & IBEX_UART_STATUS_TX_FULL_MASK);
 }
 
 /****************************************************************************
@@ -385,7 +385,7 @@ static bool ibex_txready(struct uart_dev_s *dev)
  ****************************************************************************/
 static bool ibex_txempty(struct uart_dev_s *dev)
 {
-  return (getreg32(UART0_STATUS) & UART_STATUS_TX_EMPTY_MASK);
+  return (getreg32(IBEX_UART0_STATUS) & IBEX_UART_STATUS_TX_EMPTY_MASK);
 }
 
 /****************************************************************************
@@ -475,13 +475,13 @@ int up_putc(int ch)
     /* Add CR */
     
     /* Wait until there is space for a byte in TX fifo */
-    while(getreg32(UART0_STATUS) & UART_STATUS_TX_FULL_MASK);
-    putreg32('\r', UART0_TX);
+    while(getreg32(IBEX_UART0_STATUS) & IBEX_UART_STATUS_TX_FULL_MASK);
+    putreg32('\r', IBEX_UART0_TX);
   }
 
   /* Wait until there is space for a byte in TX fifo */
-  while(getreg32(UART0_STATUS) & UART_STATUS_TX_FULL_MASK);
-  putreg32(ch, UART0_TX);
+  while(getreg32(IBEX_UART0_STATUS) & IBEX_UART_STATUS_TX_FULL_MASK);
+  putreg32(ch, IBEX_UART0_TX);
 
   leave_critical_section(flags);
   return ch;

@@ -28,20 +28,20 @@
 /****************************************************************************
  * Pre-preprocessor Definitions
  ****************************************************************************/
-#define UART0_BASE        0x80001000
-#define UART0_RX_REG      0x0
-#define UART0_TX_REG      0x4
-#define UART0_STATUS_REG  0x8
-#define UART0_RX          (UART0_BASE + UART0_RX_REG)
-#define UART0_TX          (UART0_BASE + UART0_TX_REG)
-#define UART0_STATUS      (UART0_BASE + UART0_STATUS_REG)
+#define IBEX_UART0_BASE        0x80001000
+#define IBEX_UART0_RX_REG      0x0
+#define IBEX_UART0_TX_REG      0x4
+#define IBEX_UART0_STATUS_REG  0x8
+#define IBEX_UART0_RX          (IBEX_UART0_BASE + IBEX_UART0_RX_REG)
+#define IBEX_UART0_TX          (IBEX_UART0_BASE + IBEX_UART0_TX_REG)
+#define IBEX_UART0_STATUS      (IBEX_UART0_BASE + IBEX_UART0_STATUS_REG)
 
-#define UART_STATUS_RX_EMPTY_MASK  0x1
-#define UART_STATUS_TX_FULL_MASK   0x2
-#define UART_STATUS_TX_EMPTY_MASK  0x4
+#define IBEX_UART_STATUS_RX_EMPTY_MASK  0x1
+#define IBEX_UART_STATUS_TX_FULL_MASK   0x2
+#define IBEX_UART_STATUS_TX_EMPTY_MASK  0x4
 
 /* IRQ numbers assignments */
-#define UART0_RX_IRQ 16
-#define UART0_TX_IRQ 17
+#define IBEX_UART0_RX_IRQ 16
+#define IBEX_UART0_TX_IRQ 17
 
 #endif /* __ARCH_RISCV_SRC_IBEX_HARDWARE_IBEX_UART_H */

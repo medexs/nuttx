@@ -28,12 +28,12 @@
 /****************************************************************************
  * Pre-preprocessor Definitions
  ****************************************************************************/
-#define TIMER_BASE          0x80002000
-#define TIMER_MTIME_REG     0x0
-#define TIMER_MTIMECMP_REG  0x8
-#define TIMER_MTIME         (TIMER_BASE + TIMER_MTIME_REG)
-#define TIMER_MTIMECMP      (TIMER_BASE + TIMER_MTIMECMP_REG)
+#define IBEX_TIMER_BASE          0x80002000
+#define IBEX_TIMER_MTIME_REG     0x0
+#define IBEX_TIMER_MTIMECMP_REG  0x8
+#define IBEX_TIMER_MTIME         (IBEX_TIMER_BASE + IBEX_TIMER_MTIME_REG)
+#define IBEX_TIMER_MTIMECMP      (IBEX_TIMER_BASE + IBEX_TIMER_MTIMECMP_REG)
 
-#define TIMER_FREQ          50000000UL
+#define IBEX_TIMER_FREQ          50000000UL
 
 #endif /* __ARCH_RISCV_SRC_IBEX_HARDWARE_IBEX_TIMER_H */

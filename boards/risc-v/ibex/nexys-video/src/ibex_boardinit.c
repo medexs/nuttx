@@ -45,7 +45,7 @@
 void ibex_board_initialize(void)
 {
   /* Set OLED control signals (active-low) */
-  uint32_t set_mask = BOARD_OLED_VDD_MASK | BOARD_OLED_RES_MASK | BOARD_OLED_VBAT_MASK;
+  uint32_t set_mask = BOARD_OLED_VDD_MASK | BOARD_OLED_RST_MASK | BOARD_OLED_VBAT_MASK;
   /* Clear other signals */
   uint32_t clear_mask = UINT32_MAX - set_mask;
   modifyreg32(IBEX_GPIO_OUT, clear_mask, set_mask);

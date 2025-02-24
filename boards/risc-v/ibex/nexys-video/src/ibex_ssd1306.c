@@ -58,9 +58,9 @@ int board_lcd_initialize(void)
   /* Power up and reset OLED */
   modifyreg32(IBEX_GPIO_OUT, BOARD_OLED_VDD_MASK, 0);
   usleep(1 * 1000);
-  modifyreg32(IBEX_GPIO_OUT, BOARD_OLED_RES_MASK, 0);
+  modifyreg32(IBEX_GPIO_OUT, BOARD_OLED_RST_MASK, 0);
   usleep(3);
-  modifyreg32(IBEX_GPIO_OUT, 0, BOARD_OLED_RES_MASK);
+  modifyreg32(IBEX_GPIO_OUT, 0, BOARD_OLED_RST_MASK);
   modifyreg32(IBEX_GPIO_OUT, BOARD_OLED_VBAT_MASK, 0);
   usleep(100 * 1000);
 

@@ -26,4 +26,8 @@ ifeq ($(CONFIG_ARCH_LEDS),y)
   CSRCS += ibex_autoleds.c
 endif
 
+ifeq ($(CONFIG_LCD_SSD1306_SPI),y)
+  CSRCS += ibex_ssd1306.c
+endif
+
 include $(TOPDIR)/boards/Board.mk

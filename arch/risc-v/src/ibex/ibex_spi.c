@@ -483,23 +483,20 @@ static uint32_t ibex_spi_send(struct spi_dev_s *dev, uint32_t wd)
                             const void *txbuffer, void *rxbuffer,
                             size_t nwords)
 {
-  if (!txbuffer)
-  {
-    spierr("ibex_spi_exchange(): txbufer=NULL.\n");
-    PANIC();
-  }
-
-  if (!rxbuffer)
-  {
-    spierr("ibex_spi_exchange(): rxbufer=NULL.\n");
-    PANIC();
-  }
-
-
   spiinfo("ibex_spi_exchange(): SPI receive not implemented.\n");
+
+  uint8_t recv_data = 0;
   for (int i = 0; i < nwords; i++)
   {
-    ((uint8_t*)rxbuffer)[i] = ibex_spi_send(dev, ((uint8_t*)txbuffer)[i]);
+    if (txbuffer)
+    {
+      recv_data = ibex_spi_send(dev, ((uint8_t*)txbuffer)[i]);
+    }
+
+    if (rxbuffer)
+    {
+      ((uint8_t*)rxbuffer)[i] = recv_data;
+    }
   }
 }
 

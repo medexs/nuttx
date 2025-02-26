@@ -152,8 +152,8 @@ static struct ibex_spi_dev_s g_ibex_spi_dev =
   .config     = 
   {
     .clk_freq = IBEX_SPI_FREQ,
-    .mode     = SPIDEV_MODE1,
-    .nbits    = 8
+    .mode     = IBEX_SPI_MODE,
+    .nbits    = IBEX_SPI_NBITS
   },
   .refs       = 0,
   .lock       = NXMUTEX_INITIALIZER
@@ -231,10 +231,16 @@ static void ibex_spi_select(struct spi_dev_s *dev, uint32_t devid,
 static uint32_t ibex_spi_setfrequency(struct spi_dev_s *dev,
                                       uint32_t frequency)
 {
-  spiinfo("ibex_spi_setfrequency(): Setting SPI frequency not supported, only"
-    " %ld Hz available.\n", IBEX_SPI_FREQ);
+  struct ibex_spi_dev_s *ibex_dev = (struct ibex_spi_dev_s *)dev;
 
-  return IBEX_SPI_FREQ;
+  if (ibex_dev->config.clk_freq != frequency)
+  {
+    spierr("ibex_spi_setfrequency(): Setting SPI frequency not supported,"
+    " only %ld Hz available.\n", ibex_dev->config.clk_freq);
+    PANIC();
+  }
+
+  return ibex_dev->config.clk_freq;
 }
 
 /****************************************************************************
@@ -283,31 +289,9 @@ static int ibex_spi_setdelay(struct spi_dev_s *dev, uint32_t startdelay,
  ****************************************************************************/
 static void ibex_spi_setmode(struct spi_dev_s *dev, enum spi_mode_e mode)
 {
-  // struct ibex_spi_priv_s *priv = (struct ibex_spi_priv_s *)dev;
-  int err = 0;
+  struct ibex_spi_dev_s *ibex_dev = (struct ibex_spi_dev_s *)dev;
 
-  switch (mode)
-  {
-    case SPIDEV_MODE0: /* CPOL=0; CPHA=0 */
-      err = 1;
-    break;
-
-    case SPIDEV_MODE1: /* CPOL=0; CPHA=1 */
-    break;
-
-    case SPIDEV_MODE2: /* CPOL=1; CPHA=0 */
-      err = 1;
-    break;
-
-    case SPIDEV_MODE3: /* CPOL=1; CPHA=1 */
-      err = 1;
-    break;
-
-    default:
-    return;
-  }
-
-  if (err)
+  if (ibex_dev->config.mode != mode)
   {
     spierr("ibex_spi_setmode(): mode %d not supported.\n", mode);
     PANIC();
@@ -330,15 +314,12 @@ static void ibex_spi_setmode(struct spi_dev_s *dev, enum spi_mode_e mode)
  ****************************************************************************/
 static void ibex_spi_setbits(struct spi_dev_s *dev, int nbits)
 {
-  switch (nbits)
-  {
-    case 8:
-    break;
+  struct ibex_spi_dev_s *ibex_dev = (struct ibex_spi_dev_s *)dev;
 
-    default:
-      spierr("ibex_spi_setbits(): %d bits not supported.\n", nbits);
-      PANIC();
-    break;
+  if (ibex_dev->config.nbits != nbits)
+  {
+    spierr("ibex_spi_setbits(): %d bits not supported.\n", nbits);
+    PANIC();
   }
 }
 

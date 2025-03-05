@@ -300,6 +300,7 @@ static int ibex_receive(struct uart_dev_s *dev, unsigned int *status)
   if (!(getreg32(IBEX_UART0_STATUS) & IBEX_UART_STATUS_RX_EMPTY_MASK))
     rx_data = getreg32(IBEX_UART0_RX);
 
+  *status = OK;
   return rx_data;
 }
 

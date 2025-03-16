@@ -76,7 +76,7 @@ config ARCH_BOARD_AXOLOTI
 
 config ARCH_BOARD_BASYS3
 	bool "DIGILENT Basys 3 board"
-	depends on ARCH_CHIP_IBEX
+	depends on ARCH_CHIP_IBEX_DS
 	select ARCH_HAVE_LEDS
 	select ARCH_HAVE_BUTTONS
 	---help---
@@ -1152,12 +1152,12 @@ config ARCH_BOARD_MOXA
 
 config ARCH_BOARD_NEXYS_VIDEO
 	bool "DIGILENT Nexys Video board"
-	depends on ARCH_CHIP_IBEX
+	depends on ARCH_CHIP_IBEX_DS
 	select ARCH_HAVE_LEDS
 	select ARCH_HAVE_BUTTONS
 	---help---
 		This is the board configuration for the port of NuttX to the Digilent Nexys
-		Video board. This board features the RISC-V Ibex softcore by lowRISC.
+		Video board. This board features RISC-V Ibex Demo System softcore by lowRISC.
 
 config ARCH_BOARD_NE64BADGE
 	bool "FEG NE64 /PoE Badge board"
@@ -4431,7 +4431,7 @@ if ARCH_BOARD_DEMOS92S12NEC64
 source "boards/hc/m9s12/demo9s12ne64/Kconfig"
 endif
 if ARCH_BOARD_NEXYS_VIDEO
-source "boards/risc-v/ibex/nexys-video/Kconfig"
+source "boards/risc-v/ibex-ds/nexys-video/Kconfig"
 endif
 if ARCH_BOARD_NE64BADGE
 source "boards/hc/m9s12/ne64badge/Kconfig"
@@ -4503,7 +4503,7 @@ if ARCH_BOARD_K230_CANMV
 source "boards/risc-v/k230/canmv230/Kconfig"
 endif
 if ARCH_BOARD_BASYS3
-source "boards/risc-v/ibex/basys3/Kconfig"
+source "boards/risc-v/ibex-ds/basys3/Kconfig"
 endif
 if ARCH_BOARD_BL808_OX64
 source "boards/risc-v/bl808/ox64/Kconfig"

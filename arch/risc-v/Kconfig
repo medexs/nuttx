@@ -266,8 +266,8 @@ config ARCH_CHIP_HPM6750
 	---help---
 		Hpmicro HPM6750 processor (D45 RISC-V Core with MAC extensions).
 
-config ARCH_CHIP_IBEX
-	bool "lowRISC Ibex"
+config ARCH_CHIP_IBEX_DS
+	bool "lowRISC Ibex Demo System"
 	select ARCH_RV32
 	select ARCH_RV_ISA_M
 	select ARCH_RV_ISA_C
@@ -275,7 +275,7 @@ config ARCH_CHIP_IBEX
 	select ARCH_HAVE_DEBUG
 	select ARCH_HAVE_TICKLESS
 	---help---
-		lowRISC Ibex (RV32IMC).
+		lowRISC Ibex Demo System.
 
 config ARCH_CHIP_JH7110
 	bool "StarFive JH7110"
@@ -507,7 +507,7 @@ config ARCH_CHIP
 	default "qemu-rv"               if ARCH_CHIP_QEMU_RV
 	default "hpm6000"               if ARCH_CHIP_HPM6000
 	default "hpm6750"               if ARCH_CHIP_HPM6750
-	default "ibex"                  if ARCH_CHIP_IBEX
+	default "ibex-ds"               if ARCH_CHIP_IBEX_DS
 	default "jh7110"                if ARCH_CHIP_JH7110
 	default "bl808"                 if ARCH_CHIP_BL808
 	default "k230"                  if ARCH_CHIP_K230
@@ -740,8 +740,8 @@ endif
 if ARCH_CHIP_HPM6750
 source "arch/risc-v/src/hpm6750/Kconfig"
 endif
-if ARCH_CHIP_IBEX
-source "arch/risc-v/src/ibex/Kconfig"
+if ARCH_CHIP_IBEX_DS
+source "arch/risc-v/src/ibex-ds/Kconfig"
 endif
 if ARCH_CHIP_JH7110
 source "arch/risc-v/src/jh7110/Kconfig"

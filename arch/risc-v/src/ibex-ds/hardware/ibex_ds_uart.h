@@ -40,8 +40,4 @@
 #define IBEX_DS_UART_STATUS_TX_FULL_MASK   0x2
 #define IBEX_DS_UART_STATUS_TX_EMPTY_MASK  0x4
 
-/* IRQ numbers assignments */
-#define IBEX_DS_UART0_RX_IRQ 16
-#define IBEX_DS_UART0_TX_IRQ 17
-
 #endif /* __ARCH_RISCV_SRC_IBEX_DS_HARDWARE_IBEX_DS_UART_H */

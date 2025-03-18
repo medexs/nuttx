@@ -36,4 +36,8 @@
 /* Number of available IRQ's - needed by NuttX */
 #define NR_IRQS (IBEX_DS_NR_IRQS + RISCV_IRQ_ASYNC)
 
+/* UART0 IRQ */
+#define IBEX_DS_UART0_RX_IRQ 16
+#define IBEX_DS_UART0_TX_IRQ 17
+
 #endif /* __ARCH_RISCV_INCLUDE_IBEX_DS_IRQ_H */

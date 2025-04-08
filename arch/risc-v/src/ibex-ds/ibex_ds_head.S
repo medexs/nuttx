@@ -29,7 +29,7 @@
  * Public Symbols
  ****************************************************************************/
 /* Imported symbols */
-.extern __vector_table
+.extern __ibex_ds_vector_table
 
 .global __start
 
@@ -57,7 +57,7 @@ __start:
   csrw CSR_MSTATUS, zero
 
   /* Initialize the Machine Trap Vector */
-  la t0, __vector_table
+  la t0, __ibex_ds_vector_table
   csrw CSR_MTVEC, t0
 
   /* Jump to __ibex_ds_start */

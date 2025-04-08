@@ -24,20 +24,21 @@
 
 .section .text
 .balign 256
-.global  __vector_table
+.global  __ibex_ds_vector_table
 
 /****************************************************************************
- * Name: __vector_table
+ * Name: __ibex_ds_vector_table
  *
  * Description:
  *   Like in riscv_vectors.s, all M-mode exceptions and interrupts will be
  *   handled from here. If kernel is in S-mode delegated exceptions and
- *   interrupts are handled. Label '__vector_table' is aligned to 256 because
+ *   interrupts are handled. Label '__ibex_ds_vector_table' is aligned to 256
+ *   because
  *   Ibex needs contents of mtvec aligned to 256B. The vector table consists
  *   of 32 same vectors, because for now, Ibex can only have mtvec.mode set to
  *   vectored.
  ****************************************************************************/
-__vector_table:
+__ibex_ds_vector_table:
 	.option push
   .option norvc
 

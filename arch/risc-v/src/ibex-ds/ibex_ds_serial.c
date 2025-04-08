@@ -51,7 +51,7 @@
 /****************************************************************************
  * Private Types
  ****************************************************************************/
-struct uart_config_s
+struct ibex_ds_uart_config_s
 {
   uint8_t  idx;       /* UART idx */
   uint32_t baud;      /* Configured baud */
@@ -62,9 +62,9 @@ struct uart_config_s
 
 struct ibex_ds_uart_s
 {
-  uint8_t              rx_irq; /* IRQ from UARTs RX queue */
-  uint8_t              tx_irq; /* IRQ from UARTs TX queue */
-  struct uart_config_s config;
+  uint8_t                      rx_irq; /* IRQ from UARTs RX queue */
+  uint8_t                      tx_irq; /* IRQ from UARTs TX queue */
+  struct ibex_ds_uart_config_s config;
 };
 
 /****************************************************************************

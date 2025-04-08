@@ -55,7 +55,8 @@ int ibex_ds_bringup(void)
   ret = fb_register(0, 0);
   if (ret < 0)
   {
-    syslog(LOG_ERR, "ERROR: Failed to initialize Frame Buffer Driver.\n");
+    syslog(LOG_ERR, "ERROR: Failed to initialize Frame Buffer Driver: %d.\n",
+      ret);
     return ret;
   }
 #endif

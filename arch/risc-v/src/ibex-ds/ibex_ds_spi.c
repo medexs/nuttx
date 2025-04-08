@@ -245,7 +245,7 @@ static uint32_t ibex_ds_spi_setfrequency(struct spi_dev_s *dev,
   {
     spierr("ibex_ds_spi_setfrequency(): Setting SPI frequency not supported,"
     " only %ld Hz available.\n", ibex_ds_dev->config.clk_freq);
-    PANIC();
+    DEBUGPANIC();
   }
 
   return ibex_ds_dev->config.clk_freq;
@@ -302,7 +302,7 @@ static void ibex_ds_spi_setmode(struct spi_dev_s *dev, enum spi_mode_e mode)
   if (ibex_ds_dev->config.mode != mode)
   {
     spierr("ibex_ds_spi_setmode(): mode %d not supported.\n", mode);
-    PANIC();
+    DEBUGPANIC();
   }
 }
 
@@ -327,7 +327,7 @@ static void ibex_ds_spi_setbits(struct spi_dev_s *dev, int nbits)
   if (ibex_ds_dev->config.nbits != nbits)
   {
     spierr("ibex_ds_spi_setbits(): %d bits not supported.\n", nbits);
-    PANIC();
+    DEBUGPANIC();
   }
 }
 
@@ -513,10 +513,7 @@ static void ibex_ds_spi_sndblock(struct spi_dev_s *dev,
                             const void *txbuffer, size_t nwords)
 {
   if (!txbuffer)
-  {
-    spierr("ibex_ds_spi_sndblock(): txbufer=NULL.");
-    PANIC();
-  }
+    return;
 
   for (int i = 0; i < nwords; i++)
     ibex_ds_spi_send(dev, ((uint8_t*)txbuffer)[i]);

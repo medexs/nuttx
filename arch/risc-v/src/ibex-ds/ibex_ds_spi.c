@@ -72,11 +72,11 @@ struct ibex_ds_spi_config_s
 
 struct ibex_ds_spi_dev_s
 {
-  struct spi_dev_s         spi_dev; /* Externally visible part of the
+  struct spi_dev_s            spi_dev; /* Externally visible part of the
                                        SPI interface */
   struct ibex_ds_spi_config_s config;  /* Port configuration */
-  int                      refs;    /* Referernce count */
-  mutex_t                  lock;    /* Held while chip is selected for
+  int                         refs;    /* Referernce count */
+  mutex_t                     lock;    /* Held while chip is selected for
                                        mutual exclusion */
 };
 

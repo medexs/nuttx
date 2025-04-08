@@ -109,7 +109,7 @@ void board_late_initialize(void)
   /* Perform board-specific initialization */
   if(ibex_ds_bringup() != OK)
   {
-    syslog(LOG_ERR, "ERROR: Failed to bring up Ibex.\n");
+    syslog(LOG_ERR, "ERROR: ibex_ds_bringup() failed.\n");
     PANIC();
   }
 

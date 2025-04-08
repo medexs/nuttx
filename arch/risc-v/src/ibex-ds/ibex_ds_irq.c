@@ -142,7 +142,7 @@ irqstate_t up_irq_enable(void)
  ****************************************************************************/
 void up_enable_irq(int irq)
 {
-  int custom_irq = irq - RISCV_IRQ_ASYNC;
+  int irq_no_offset = irq - RISCV_IRQ_ASYNC;
 
   if (irq == RISCV_IRQ_MSOFT)
     SET_CSR(CSR_MIE, MIE_MSIE);
@@ -150,11 +150,11 @@ void up_enable_irq(int irq)
     SET_CSR(CSR_MIE, MIE_MTIE);
   else if (irq == RISCV_IRQ_MEXT)
     SET_CSR(CSR_MIE, MIE_MEIE);
-  else if (custom_irq >= 16 && custom_irq <= 31)
-    SET_CSR(CSR_MIE, (1 << custom_irq));
+  else if (irq_no_offset >= 16 && irq_no_offset <= 31)
+    SET_CSR(CSR_MIE, (1 << irq_no_offset));
   else
   {
-    irqerr("IRQERR: Unknown irq=%d or custom_irq=%d\n", irq, custom_irq);
+    irqerr("IRQERR: Unknown irq=%d or irq_no_offset=%d\n", irq, irq_no_offset);
     PANIC();
   }
 }
@@ -174,7 +174,7 @@ void up_enable_irq(int irq)
  ****************************************************************************/
 void up_disable_irq(int irq)
 {
-  int custom_irq = irq - RISCV_IRQ_ASYNC;
+  int irq_no_offset = irq - RISCV_IRQ_ASYNC;
 
   if (irq == RISCV_IRQ_MSOFT)
     CLEAR_CSR(CSR_MIE, MIE_MSIE);
@@ -182,11 +182,11 @@ void up_disable_irq(int irq)
     CLEAR_CSR(CSR_MIE, MIE_MTIE);
   else if (irq == RISCV_IRQ_MEXT)
     CLEAR_CSR(CSR_MIE, MIE_MEIE);
-  else if (custom_irq >= 16 && custom_irq <= 31)
-    CLEAR_CSR(CSR_MIE, (1 << custom_irq));
+  else if (irq_no_offset >= 16 && irq_no_offset <= 31)
+    CLEAR_CSR(CSR_MIE, (1 << irq_no_offset));
   else
   {
-    irqerr("IRQERR: Unknown irq=%d or custom_irq=%d\n", irq, custom_irq);
+    irqerr("IRQERR: Unknown irq=%d or irq_no_offset=%d\n", irq, irq_no_offset);
     PANIC();
   }
 }

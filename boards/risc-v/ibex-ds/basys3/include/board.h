@@ -30,7 +30,9 @@
  * Pre-processor Definitions
  ****************************************************************************/
 
-// Basys3 LEDs
+/* ******************************** GPO *********************************** */
+
+ // Basys 3 LEDs
 #define BOARD_LED_CNT       16
 #define BOARD_ALL_LED_MASK  ((BOARD_LED_CNT == 32) ? 0xFFFFFFFF : (((uint32_t)1 << BOARD_LED_CNT) - 1))
 #define BOARD_LED0_MASK     0x1
@@ -46,6 +48,19 @@
 #define LED_SIGNAL          BOARD_LED_MASK(6)
 #define LED_ASSERTION       BOARD_LED_MASK(7)
 #define LED_PANIC           BOARD_LED_MASK(8)
+
+/* ******************************** GPI *********************************** */
+
+// Basys 3 switches
+#define BOARD_SW_CNT      16
+#define BOARD_SW0_MASK    0x1
+#define BOARD_SW_MASK(n)  (BOARD_SW0_MASK << n)
+
+// Basys 3 buttons (mapped to GPI after switches), center BTN is used as reset
+#define BOARD_BTN_LEFT    BOARD_SW_MASK(BOARD_SW_CNT)
+#define BOARD_BTN_RIGHT   BOARD_BTN_LEFT << 1
+#define BOARD_BTN_UP      BOARD_BTN_RIGHT << 1
+#define BOARD_BTN_DOWN    BOARD_BTN_UP << 1
 
 #endif /* __BOARDS_RISCV_IBEX_DS_BASYS3_INCLUDE_BOARD_H */
 
